@@ -22,7 +22,7 @@ function PrivacyPage() {
           <div className="space-y-8">
             {/* Section 1 */}
             <section className="bg-gray-900/60 rounded-lg border border-gray-800 p-6 sm:p-8">
-              <h2 className="text-lg sm:text-xl font-semibold text-primary-orange mb-4 uppercase tracking-wide">
+              <h2 className="text-lg sm:text-xl font-semibold text-primary-orange mb-4 tracking-wide">
                 Section 1 – What Do We Do With Your Information?
               </h2>
               <p className="text-gray-300 leading-relaxed">
@@ -32,7 +32,7 @@ function PrivacyPage() {
 
             {/* Section 2 */}
             <section className="bg-gray-900/60 rounded-lg border border-gray-800 p-6 sm:p-8">
-              <h2 className="text-lg sm:text-xl font-semibold text-primary-orange mb-4 uppercase tracking-wide">
+              <h2 className="text-lg sm:text-xl font-semibold text-primary-orange mb-4 tracking-wide">
                 Section 2 – Consent
               </h2>
               <p className="text-gray-300 leading-relaxed">
@@ -42,7 +42,7 @@ function PrivacyPage() {
 
             {/* Section 3 */}
             <section className="bg-gray-900/60 rounded-lg border border-gray-800 p-6 sm:p-8">
-              <h2 className="text-lg sm:text-xl font-semibold text-primary-orange mb-4 uppercase tracking-wide">
+              <h2 className="text-lg sm:text-xl font-semibold text-primary-orange mb-4 tracking-wide">
                 Section 3 – Disclosure
               </h2>
               <p className="text-gray-300 leading-relaxed">
@@ -52,7 +52,7 @@ function PrivacyPage() {
 
             {/* Section 4 */}
             <section className="bg-gray-900/60 rounded-lg border border-gray-800 p-6 sm:p-8">
-              <h2 className="text-lg sm:text-xl font-semibold text-primary-orange mb-4 uppercase tracking-wide">
+              <h2 className="text-lg sm:text-xl font-semibold text-primary-orange mb-4 tracking-wide">
                 Section 4 – Third-Party Services
               </h2>
               <p className="text-gray-300 leading-relaxed">
@@ -62,7 +62,7 @@ function PrivacyPage() {
 
             {/* Section 5 */}
             <section className="bg-gray-900/60 rounded-lg border border-gray-800 p-6 sm:p-8">
-              <h2 className="text-lg sm:text-xl font-semibold text-primary-orange mb-4 uppercase tracking-wide">
+              <h2 className="text-lg sm:text-xl font-semibold text-primary-orange mb-4 tracking-wide">
                 Section 5 – Security
               </h2>
               <p className="text-gray-300 leading-relaxed">
@@ -72,7 +72,7 @@ function PrivacyPage() {
 
             {/* Section 6 */}
             <section className="bg-gray-900/60 rounded-lg border border-gray-800 p-6 sm:p-8">
-              <h2 className="text-lg sm:text-xl font-semibold text-primary-orange mb-4 uppercase tracking-wide">
+              <h2 className="text-lg sm:text-xl font-semibold text-primary-orange mb-4 tracking-wide">
                 Section 6 – Cookies
               </h2>
               <p className="text-gray-300 leading-relaxed">
@@ -82,7 +82,7 @@ function PrivacyPage() {
 
             {/* Section 7 */}
             <section className="bg-gray-900/60 rounded-lg border border-gray-800 p-6 sm:p-8">
-              <h2 className="text-lg sm:text-xl font-semibold text-primary-orange mb-4 uppercase tracking-wide">
+              <h2 className="text-lg sm:text-xl font-semibold text-primary-orange mb-4 tracking-wide">
                 Section 7 – Age of Consent
               </h2>
               <p className="text-gray-300 leading-relaxed">
@@ -92,7 +92,7 @@ function PrivacyPage() {
 
             {/* Section 8 */}
             <section className="bg-gray-900/60 rounded-lg border border-gray-800 p-6 sm:p-8">
-              <h2 className="text-lg sm:text-xl font-semibold text-primary-orange mb-4 uppercase tracking-wide">
+              <h2 className="text-lg sm:text-xl font-semibold text-primary-orange mb-4 tracking-wide">
                 Section 8 – Changes to This Privacy Policy
               </h2>
               <p className="text-gray-300 leading-relaxed">
@@ -102,7 +102,7 @@ function PrivacyPage() {
 
             {/* Questions and Contact Information */}
             <section className="bg-gray-900/60 rounded-lg border border-gray-800 p-6 sm:p-8">
-              <h2 className="text-lg sm:text-xl font-semibold text-primary-orange mb-4 uppercase tracking-wide">
+              <h2 className="text-lg sm:text-xl font-semibold text-primary-orange mb-4 tracking-wide">
                 Questions and Contact Information
               </h2>
               <p className="text-gray-300 leading-relaxed">
@@ -116,7 +116,7 @@ function PrivacyPage() {
 
               <div className="space-y-6">
                 <div className="bg-gray-900/60 rounded-lg border border-gray-800 p-6 sm:p-8">
-                  <h3 className="text-base sm:text-lg font-semibold text-primary-orange mb-3 uppercase tracking-wide">
+                  <h3 className="text-base sm:text-lg font-semibold text-primary-orange mb-3 tracking-wide">
                     Subscription Data Collection
                   </h3>
                   <p className="text-gray-300 leading-relaxed">
@@ -125,7 +125,7 @@ function PrivacyPage() {
                 </div>
 
                 <div className="bg-gray-900/60 rounded-lg border border-gray-800 p-6 sm:p-8">
-                  <h3 className="text-base sm:text-lg font-semibold text-primary-orange mb-3 uppercase tracking-wide">
+                  <h3 className="text-base sm:text-lg font-semibold text-primary-orange mb-3 tracking-wide">
                     Auto-Renewal & Billing Information
                   </h3>
                   <p className="text-gray-300 leading-relaxed">
@@ -134,7 +134,7 @@ function PrivacyPage() {
                 </div>
 
                 <div className="bg-gray-900/60 rounded-lg border border-gray-800 p-6 sm:p-8">
-                  <h3 className="text-base sm:text-lg font-semibold text-primary-orange mb-3 uppercase tracking-wide">
+                  <h3 className="text-base sm:text-lg font-semibold text-primary-orange mb-3 tracking-wide">
                     Managing Subscription Data
                   </h3>
                   <p className="text-gray-300 leading-relaxed">
@@ -143,7 +143,7 @@ function PrivacyPage() {
                 </div>
 
                 <div className="bg-gray-900/60 rounded-lg border border-gray-800 p-6 sm:p-8">
-                  <h3 className="text-base sm:text-lg font-semibold text-primary-orange mb-3 uppercase tracking-wide">
+                  <h3 className="text-base sm:text-lg font-semibold text-primary-orange mb-3 tracking-wide">
                     Sharing Subscription Data
                   </h3>
                   <p className="text-gray-300 leading-relaxed">

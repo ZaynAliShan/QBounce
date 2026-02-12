@@ -10,12 +10,12 @@ const WhatWeProvide = () => {
     },
     {
       icon: <FaUser className="w-14 h-14" />,
-      title: 'AGE-APPROPRIATE COACHING',
+      title: 'Age-Appropriate Coaching',
       description: 'Smart training paths for kids, teens, and adults—whether you\'re just starting or leveling up competitively.',
     },
     {
       icon: <img src="/images/book-icon.png" alt="Open book icon" className="w-20 h-20 object-contain" />,
-      title: 'SKILL-SCIENCE BASED',
+      title: 'Skill-Science Based',
       description: 'Designed using proven training principles used by elite coaches to build real skills like control, reaction time, and muscle memory.',
     },
     {
@@ -24,7 +24,7 @@ const WhatWeProvide = () => {
           <path strokeLinecap="round" strokeLinejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
         </svg>
       ),
-      title: 'ALWAYS IMPROVING',
+      title: 'Always Improving',
       description: 'Regularly updated with new drills, challenges, and progress tracking to keep training fresh, fun, and effective.',
     },
   ]

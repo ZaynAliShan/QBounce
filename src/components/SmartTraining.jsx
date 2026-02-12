@@ -6,14 +6,14 @@ const SmartTraining = () => {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         {/* Main Title */}
         <div className="text-center mb-8">
-          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold uppercase mb-6">
-            <span className="text-white">TURNING EVERYDAY PRACTICE INTO </span>
-            <span className="text-primary-orange">REAL IMPROVEMENT</span>
+          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
+            <span className="text-white">Turning Everyday Practice Into </span>
+            <span className="text-primary-orange">Real Improvement</span>
           </h2>
           
           {/* Introductory Paragraph */}
-          <p className="text-sm sm:text-base md:text-lg text-primary-orange uppercase max-w-4xl mx-auto leading-relaxed">
-            QBOUNCE PRO APP BRINGS PERFORMANCE-FOCUSED MOVEMENT ANALYSIS TO YOUR PHONE — THE SAME PRINCIPLES USED IN ELITE TRAINING, NOW MADE SIMPLE AND ACCESSIBLE.
+          <p className="text-sm sm:text-base md:text-lg text-primary-orange max-w-4xl mx-auto leading-relaxed">
+            QBounce Pro App Brings Performance-Focused Movement Analysis To Your Phone — The Same Principles Used In Elite Training, Now Made Simple And Accessible.
           </p>
         </div>
 
@@ -48,18 +48,18 @@ const SmartTraining = () => {
               
               {/* Title and Subtitle */}
               <div>
-                <h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-primary-orange uppercase mb-2">
-                  UNDERSTANDING SMART TRAINING
+                <h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-primary-orange mb-2">
+                  Understanding Smart Training
                 </h3>
-                <p className="text-sm sm:text-base text-white uppercase">
-                  HOW REAL SKILL DEVELOPMENT HAPPENS
+                <p className="text-sm sm:text-base text-white">
+                  How Real Skill Development Happens
                 </p>
               </div>
             </div>
 
             {/* Main Text */}
             <p className="text-white text-sm sm:text-base md:text-lg mb-8 leading-relaxed">
-              QBOUNCE PRO APP FOCUSES ON HOW YOUR BODY MOVES — TIMING, COORDINATION, BALANCE, AND CONTROL. THESE SUBTLE MOVEMENT PATTERNS ARE WHAT SEPARATE RANDOM PRACTICE FROM REAL IMPROVEMENT.
+              QBounce Pro App Focuses On How Your Body Moves — Timing, Coordination, Balance, And Control. These Subtle Movement Patterns Are What Separate Random Practice From Real Improvement.
             </p>
 
             {/* Three Horizontal Sub-sections */}
@@ -69,25 +69,25 @@ const SmartTraining = () => {
                 className="rounded-2xl p-4 sm:p-6"
                 style={{ backgroundColor: '#0f0f0f' }}
               >
-                <h4 className="text-primary-orange font-bold text-sm sm:text-base uppercase mb-4">
-                  WHAT IT TRACKS:
+                <h4 className="text-primary-orange font-bold text-sm sm:text-base mb-4">
+                  What It Tracks:
                 </h4>
                 <ul className="space-y-2 text-white text-xs sm:text-sm">
                   <li className="flex items-start">
                     <span className="text-primary-orange mr-2">•</span>
-                    <span>MOVEMENT TIMING</span>
+                    <span>Movement Timing</span>
                   </li>
                   <li className="flex items-start">
                     <span className="text-primary-orange mr-2">•</span>
-                    <span>COORDINATION & BALANCE</span>
+                    <span>Coordination & Balance</span>
                   </li>
                   <li className="flex items-start">
                     <span className="text-primary-orange mr-2">•</span>
-                    <span>FOOTWORK PATTERNS</span>
+                    <span>Footwork Patterns</span>
                   </li>
                   <li className="flex items-start">
                     <span className="text-primary-orange mr-2">•</span>
-                    <span>CONTROL AND CONSISTENCY</span>
+                    <span>Control And Consistency</span>
                   </li>
                 </ul>
               </div>
@@ -97,25 +97,25 @@ const SmartTraining = () => {
                 className="rounded-2xl p-4 sm:p-6"
                 style={{ backgroundColor: '#0f0f0f' }}
               >
-                <h4 className="text-primary-orange font-bold text-sm sm:text-base uppercase mb-4">
-                  WHY IT MATTERS:
+                <h4 className="text-primary-orange font-bold text-sm sm:text-base mb-4">
+                  Why It Matters:
                 </h4>
                 <ul className="space-y-2 text-white text-xs sm:text-sm">
                   <li className="flex items-start">
                     <span className="text-primary-orange mr-2">•</span>
-                    <span>BETTER MOVEMENT</span>
+                    <span>Better Movement</span>
                   </li>
                   <li className="flex items-start">
                     <span className="text-primary-orange mr-2">•</span>
-                    <span>FEWER BAD HABITS</span>
+                    <span>Fewer Bad Habits</span>
                   </li>
                   <li className="flex items-start">
                     <span className="text-primary-orange mr-2">•</span>
-                    <span>SAFER TRAINING</span>
+                    <span>Safer Training</span>
                   </li>
                   <li className="flex items-start">
                     <span className="text-primary-orange mr-2">•</span>
-                    <span>REAL PROGRESS FROM DAILY PRACTICE</span>
+                    <span>Real Progress From Daily Practice</span>
                   </li>
                 </ul>
               </div>
@@ -125,25 +125,25 @@ const SmartTraining = () => {
                 className="rounded-2xl p-4 sm:p-6"
                 style={{ backgroundColor: '#0f0f0f' }}
               >
-                <h4 className="text-primary-orange font-bold text-sm sm:text-base uppercase mb-4">
-                  WHO IT'S FOR:
+                <h4 className="text-primary-orange font-bold text-sm sm:text-base mb-4">
+                  Who It's For:
                 </h4>
                 <ul className="space-y-2 text-white text-xs sm:text-sm">
                   <li className="flex items-start">
                     <span className="text-primary-orange mr-2">•</span>
-                    <span>KIDS LEARNING FUNDAMENTALS</span>
+                    <span>Kids Learning Fundamentals</span>
                   </li>
                   <li className="flex items-start">
                     <span className="text-primary-orange mr-2">•</span>
-                    <span>PARENTS WANTING AT-HOME STRUCTURE</span>
+                    <span>Parents Wanting At-Home Structure</span>
                   </li>
                   <li className="flex items-start">
                     <span className="text-primary-orange mr-2">•</span>
-                    <span>SOLO ATHLETES</span>
+                    <span>Solo Athletes</span>
                   </li>
                   <li className="flex items-start">
                     <span className="text-primary-orange mr-2">•</span>
-                    <span>COACHES</span>
+                    <span>Coaches</span>
                   </li>
                 </ul>
               </div>

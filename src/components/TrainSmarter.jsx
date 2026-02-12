@@ -14,13 +14,13 @@ const TrainSmarter = () => {
           <div className="flex flex-col justify-center order-2 lg:order-1">
             {/* Main Headline */}
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 leading-tight">
-              <span className="text-white">TRAIN SMARTER THAN THE </span>
-              <span className="text-primary-orange">EYE CAN SEE</span>
+              <span className="text-white">Train Smarter Than The </span>
+              <span className="text-primary-orange">Eye Can See</span>
             </h2>
 
             {/* Subheadline */}
             <p className="text-base sm:text-lg md:text-xl text-gray-300 leading-relaxed">
-              ANALYZES YOUR CHILD'S BASKETBALL MOVEMENTS IN REAL TIME-TRACKING FORM, TIMING, AND CONTROL FROM A SINGLE PHONE VIDEO.
+              Analyzes Your Child's Basketball Movements In Real Time-Tracking Form, Timing, And Control From A Single Phone Video.
             </p>
           </div>
 

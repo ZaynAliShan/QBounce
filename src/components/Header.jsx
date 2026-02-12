@@ -44,22 +44,30 @@ const Header = ({ onGetStartedClick }) => {
                 {item.label}
               </Link>
             ))}
-            {onGetStartedClick ? (
-              <button
-                type="button"
-                onClick={handleGetStarted}
-                className="bg-primary-orange text-black px-6 py-2 rounded-lg font-semibold hover:bg-primary-orange/90 transition-colors duration-200"
+            <div className="flex items-center gap-3">
+              {onGetStartedClick ? (
+                <button
+                  type="button"
+                  onClick={handleGetStarted}
+                  className="bg-primary-orange text-black px-6 py-2 rounded-lg font-semibold hover:bg-primary-orange/90 transition-colors duration-200"
+                >
+                  Get Started
+                </button>
+              ) : (
+                <Link
+                  to="/"
+                  className="bg-primary-orange text-black px-6 py-2 rounded-lg font-semibold hover:bg-primary-orange/90 transition-colors duration-200 inline-block"
+                >
+                  Get Started
+                </Link>
+              )}
+              <a
+                href="https://qbouncepro.com/sign_in"
+                className="border border-primary-orange text-primary-orange px-6 py-2 rounded-lg font-semibold hover:bg-primary-orange/10 transition-colors duration-200"
               >
-                Get Started
-              </button>
-            ) : (
-              <Link
-                to="/"
-                className="bg-primary-orange text-black px-6 py-2 rounded-lg font-semibold hover:bg-primary-orange/90 transition-colors duration-200 inline-block"
-              >
-                Get Started
-              </Link>
-            )}
+                Sign In
+              </a>
+            </div>
           </div>
 
           {/* Mobile Menu Button */}
@@ -99,23 +107,32 @@ const Header = ({ onGetStartedClick }) => {
                 {item.label}
               </Link>
             ))}
-            {onGetStartedClick ? (
-              <button
-                type="button"
-                onClick={handleGetStarted}
-                className="block w-full bg-primary-orange text-black px-6 py-2 rounded-lg font-semibold hover:bg-primary-orange/90 transition-colors duration-200 text-center"
-              >
-                Get Started
-              </button>
-            ) : (
-              <Link
-                to="/"
-                className="block w-full bg-primary-orange text-black px-6 py-2 rounded-lg font-semibold hover:bg-primary-orange/90 transition-colors duration-200 text-center"
+            <div className="flex flex-col gap-2">
+              {onGetStartedClick ? (
+                <button
+                  type="button"
+                  onClick={handleGetStarted}
+                  className="block w-full bg-primary-orange text-black px-6 py-2 rounded-lg font-semibold hover:bg-primary-orange/90 transition-colors duration-200 text-center"
+                >
+                  Get Started
+                </button>
+              ) : (
+                <Link
+                  to="/"
+                  className="block w-full bg-primary-orange text-black px-6 py-2 rounded-lg font-semibold hover:bg-primary-orange/90 transition-colors duration-200 text-center"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  Get Started
+                </Link>
+              )}
+              <a
+                href="https://qbouncepro.com/sign_in"
+                className="block w-full border border-primary-orange text-primary-orange px-6 py-2 rounded-lg font-semibold hover:bg-primary-orange/10 transition-colors duration-200 text-center"
                 onClick={() => setIsMenuOpen(false)}
               >
-                Get Started
-              </Link>
-            )}
+                Sign In
+              </a>
+            </div>
           </div>
         )}
       </nav>

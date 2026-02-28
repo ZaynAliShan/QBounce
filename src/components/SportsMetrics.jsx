@@ -23,9 +23,9 @@ const SportsMetrics = () => {
       image: '⛳',
     },
     {
-      name: 'Tennis',
-      metrics: ['Serve Speed', 'Racket Angle', 'Body Rotation', 'Follow Through', 'Footwork'],
-      image: '🎾',
+      name: 'Boxing',
+      metrics: ['Punch Speed', 'Guard Position', 'Head Movement', 'Footwork', 'Combination Timing'],
+      image: '🥊',
     },
     {
       name: 'Volleyball',

@@ -1,9 +1,14 @@
 import React, { useEffect } from 'react'
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom'
+import { AuthProvider } from './contexts/AuthContext'
+import ToastListener from './components/ToastListener'
 import HomePage from './pages/HomePage'
 import FAQPage from './pages/FAQPage'
 import TermsPage from './pages/TermsPage'
 import PrivacyPage from './pages/PrivacyPage'
+import SignInPage from './pages/SignInPage'
+import HowToUsePage from './pages/HowToUsePage'
+import HowToCastPage from './pages/HowToCastPage'
 
 function ScrollToTop() {
   const { pathname, hash } = useLocation()
@@ -26,13 +31,19 @@ function ScrollToTop() {
 function App() {
   return (
     <BrowserRouter>
-      <ScrollToTop />
-      <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/faq" element={<FAQPage />} />
-        <Route path="/terms" element={<TermsPage />} />
-        <Route path="/privacy" element={<PrivacyPage />} />
-      </Routes>
+      <AuthProvider>
+        <ScrollToTop />
+        <ToastListener />
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/faq" element={<FAQPage />} />
+          <Route path="/terms" element={<TermsPage />} />
+          <Route path="/privacy" element={<PrivacyPage />} />
+          <Route path="/sign-in" element={<SignInPage />} />
+          <Route path="/how-to-use" element={<HowToUsePage />} />
+          <Route path="/how-to-cast" element={<HowToCastPage />} />
+        </Routes>
+      </AuthProvider>
     </BrowserRouter>
   )
 }

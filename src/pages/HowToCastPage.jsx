@@ -10,7 +10,7 @@ const IMG = {
   fifth: '/how-to-cast/fifth.webp',
   sixth: '/how-to-cast/sixth.webp',
   seventh: '/how-to-cast/seventh.webp',
-  loginPage: '/how-to-cast/login-page.webp',
+  eighth: '/how-to-cast/8th.png',
 }
 
 const STEPS = [
@@ -30,7 +30,7 @@ const STEPS = [
     image: IMG.second,
     imageAlt: 'Google Chrome browser',
     paragraph:
-      'Make sure you are using the Google Chrome browser on your PC. If you haven\'t installed it yet, download and install it from the official Google Chrome website.',
+      "Make sure you are using the Google Chrome browser on your PC. If you haven't installed it yet, download and install it from the official Google Chrome website.",
   },
   {
     num: 3,
@@ -86,8 +86,8 @@ const STEPS = [
   },
   {
     num: 8,
-    title: 'Enjoy Using the Qbounce Web App on Your TV',
-    image: IMG.loginPage,
+    title: 'Enjoy Using the QBounce Web App on Your TV',
+    image: IMG.eighth,
     imageAlt: 'QBounce app on TV',
     bullets: [
       'Now that everything is set up, your QBounce Mat App should be visible on your TV screen.',
@@ -99,41 +99,38 @@ const STEPS = [
 
 function HowToCastPage() {
   return (
-    <div className="min-h-screen bg-black relative overflow-hidden">
+    <div className="min-h-screen bg-black">
       <Header />
-      <div className="fixed inset-0 pointer-events-none -z-10">
-        <div className="absolute inset-0 bg-gradient-to-b from-primary-orange/5 via-transparent to-primary-orange/5" />
-        <div className="absolute top-1/4 -left-32 w-96 h-96 bg-primary-orange/10 rounded-full blur-3xl" />
-        <div className="absolute bottom-1/3 -right-32 w-80 h-80 bg-primary-orange/10 rounded-full blur-3xl" />
-        <div className="absolute top-2/3 left-1/2 -translate-x-1/2 w-[480px] h-64 bg-primary-orange/5 rounded-full blur-3xl" />
-      </div>
-      <main className="pt-20 relative z-0">
-        <section className="relative py-12 lg:py-16 bg-black border-b border-gray-800">
-          <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl">
-            <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold uppercase tracking-wide">
-              <span className="text-white">How To Cast </span>
-              <span className="text-primary-orange">Our App to Your Device</span>
+      <main className="pt-20">
+        {/* Hero */}
+        <section className="border-b border-gray-800/80">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16 max-w-4xl">
+            <h1 className="text-3xl sm:text-4xl font-bold text-white mb-4">
+              How to Cast QBounce to Your TV
             </h1>
           </div>
         </section>
 
-        <section className="relative py-12 lg:py-16 bg-black">
-          <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl space-y-12">
-            {STEPS.map((step, index) => (
-              <div
-                key={step.num}
-                className="relative bg-gray-900/50 border border-gray-800 rounded-2xl p-6 sm:p-8 hover:border-primary-orange/30 transition-colors duration-200"
-              >
-                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-primary-orange text-black text-lg font-bold -mt-14 sm:-mt-16 mb-4 border-4 border-black">
-                  {step.num}
-                </div>
-                <div
-                  className={`grid grid-cols-1 gap-6 ${
-                    index % 2 === 1 ? 'lg:grid-cols-2' : 'lg:grid-cols-2'
-                  }`}
+        {/* Steps */}
+        <section className="py-12 lg:py-16">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl">
+            <div className="space-y-12 lg:space-y-16">
+              {STEPS.map((step, index) => (
+                <article
+                  key={step.num}
+                  className="flex flex-col lg:flex-row gap-6 lg:gap-10 items-start lg:items-center"
                 >
-                  <div className={index % 2 === 1 ? 'lg:order-2' : ''}>
-                    <div className="overflow-hidden rounded-xl border border-gray-800 bg-gray-900/30 aspect-video min-h-[180px]">
+                  {/* Step number + image */}
+                  <div className={`w-full lg:w-[45%] shrink-0 ${index % 2 === 1 ? 'lg:order-2' : ''}`}>
+                    <div className="flex items-center gap-3 mb-4">
+                      <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-primary-orange text-black text-sm font-bold">
+                        {step.num}
+                      </span>
+                      <h2 className="text-lg font-semibold text-white">
+                        {step.title}
+                      </h2>
+                    </div>
+                    <div className="overflow-hidden rounded-lg border border-gray-800 bg-gray-900/30 aspect-video">
                       <img
                         src={step.image}
                         alt={step.imageAlt}
@@ -141,26 +138,30 @@ function HowToCastPage() {
                       />
                     </div>
                   </div>
-                  <div className={index % 2 === 1 ? 'lg:order-1' : ''}>
-                    <h3 className="text-xl font-bold text-white mb-3">{step.title}</h3>
+
+                  {/* Content */}
+                  <div className={`flex-1 min-w-0 flex flex-col justify-center ${index % 2 === 1 ? 'lg:order-1' : ''}`}>
                     {step.paragraph ? (
-                      <p className="text-gray-300 text-sm sm:text-base leading-relaxed">
-                        {step.paragraph}
-                      </p>
+                      <div className="flex gap-3">
+                        <span className="text-primary-orange shrink-0 mt-0.5">•</span>
+                        <p className="text-gray-400 text-sm sm:text-base leading-relaxed">
+                          {step.paragraph}
+                        </p>
+                      </div>
                     ) : (
-                      <ul className="space-y-2">
+                      <ul className="space-y-3">
                         {step.bullets.map((bullet, i) => (
-                          <li key={i} className="text-gray-300 text-sm sm:text-base flex gap-2">
-                            <span className="text-primary-orange shrink-0">•</span>
-                            {bullet}
+                          <li key={i} className="text-gray-400 text-sm sm:text-base leading-relaxed flex gap-3">
+                            <span className="text-primary-orange shrink-0 mt-0.5">•</span>
+                            <span>{bullet}</span>
                           </li>
                         ))}
                       </ul>
                     )}
                   </div>
-                </div>
-              </div>
-            ))}
+                </article>
+              ))}
+            </div>
           </div>
         </section>
       </main>

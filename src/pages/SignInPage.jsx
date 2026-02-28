@@ -1,7 +1,9 @@
 import React, { useState, useRef, useEffect } from 'react'
+import { useNavigate, useSearchParams } from 'react-router-dom'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
 import { useAuth } from '../contexts/AuthContext'
+import { isAllowedRedirect } from '../components/ProtectedRoute'
 import { SESSION_TOKEN_KEY } from '../lib/constants'
 
 const SEND_OTP_URL = 'https://prod.api.qbouncepro.com/api/send-otp'
@@ -11,6 +13,9 @@ const TOAST_DURATION_MS = 4000
 
 const SignInPage = () => {
   const { login } = useAuth()
+  const navigate = useNavigate()
+  const [searchParams] = useSearchParams()
+  const redirectTo = searchParams.get('redirect')
   const [email, setEmail] = useState('')
   const [otpSent, setOtpSent] = useState(false)
   const [otp, setOtp] = useState(Array(OTP_LENGTH).fill(''))
@@ -121,6 +126,10 @@ const SignInPage = () => {
       login()
       setToast('Signed in successfully!')
       setOtp(Array(OTP_LENGTH).fill(''))
+      const targetPath = redirectTo ? decodeURIComponent(redirectTo) : null
+      if (targetPath && isAllowedRedirect(targetPath)) {
+        navigate(targetPath, { replace: true })
+      }
     } catch (err) {
       setError(err.message || 'Something went wrong. Please try again.')
     } finally {
@@ -154,53 +163,52 @@ const SignInPage = () => {
       )}
       <Header />
 
-      <main className="flex-1 pt-20 pb-12 px-4 sm:px-6 lg:px-8 min-h-0">
-        {/* Main content area */}
-        <div className="max-w-6xl mx-auto overflow-hidden bg-black">
-          <div className="grid grid-cols-1 md:grid-cols-2 min-h-[calc(100vh-8rem)] md:min-h-[calc(100vh-10rem)]">
-            {/* Left: Headline + form */}
-            <section className="flex flex-col justify-center p-6 sm:p-8 md:p-10 lg:p-12">
-              <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white leading-tight tracking-tight">
+      <main className="flex-1 pt-16 sm:pt-20 pb-14 sm:pb-12 px-6 sm:px-6 lg:px-8 min-h-0">
+        <div className="max-w-6xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-2 md:min-h-[calc(100vh-10rem)] gap-8 md:gap-0">
+            {/* Left: Headline + form — on mobile, form is the focus */}
+            <section className="flex flex-col justify-center md:justify-center pt-8 sm:pt-0 md:p-10 lg:p-12 order-2 md:order-1 max-w-md md:max-w-none">
+              <h1 className="text-2xl sm:text-4xl md:text-5xl font-bold text-white leading-tight tracking-tight">
                 Welcome{' '}
                 <span className="text-primary-orange">Back</span>
               </h1>
-              <p className="mt-3 sm:mt-4 text-sm sm:text-base text-zinc-400 max-w-md">
+              <p className="mt-4 sm:mt-4 text-sm sm:text-base text-zinc-400 max-w-md">
                 {otpSent ? 'Check your inbox and enter the code below.' : "Enter your email to continue. We'll take it from there."}
               </p>
 
-              <div className="mt-6 sm:mt-8 w-full max-w-md rounded-xl bg-gray-900/50 border border-gray-800 p-6 sm:p-8 hover:border-primary-orange/50 transition-all duration-300">
+              <div className="mt-8 sm:mt-8 w-full rounded-2xl bg-gray-900/50 border border-gray-800 p-6 sm:p-8 md:hover:border-primary-orange/50 transition-colors duration-200">
                 {!otpSent ? (
                   <form className="space-y-5" onSubmit={handleSendOtp}>
-                    <div className="space-y-2">
-                      <label htmlFor="email" className="block text-sm font-medium text-white">
-                        Enter your email
+                    <div className="space-y-3">
+                      <label htmlFor="email" className="block text-sm font-medium text-zinc-300">
+                        Enter Your Email
                       </label>
                       <input
                         id="email"
                         type="email"
                         autoComplete="email"
-                        placeholder="Enter your email"
+                        placeholder="Enter Your Email"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
-                        className="w-full rounded-xl border border-zinc-600 bg-zinc-900/80 px-4 py-3.5 text-white placeholder:text-zinc-500 outline-none focus:border-primary-orange focus:ring-2 focus:ring-primary-orange/40 transition"
+                        className="w-full rounded-xl border border-zinc-700 bg-black/50 px-4 py-3.5 text-white placeholder:text-zinc-500 outline-none focus:border-primary-orange focus:ring-2 focus:ring-primary-orange/30 transition text-base"
                       />
                     </div>
                     {error && <p className="text-sm text-red-400" role="alert">{error}</p>}
                     <button
                       type="submit"
                       disabled={loading}
-                      className="w-full rounded-xl bg-primary-orange text-white font-semibold py-3.5 text-base hover:bg-primary-orange/90 focus:outline-none focus:ring-2 focus:ring-primary-orange focus:ring-offset-2 focus:ring-offset-zinc-800 transition disabled:opacity-60 disabled:cursor-not-allowed"
+                      className="w-full rounded-xl bg-primary-orange text-white font-semibold py-3.5 text-base hover:bg-primary-orange/90 active:scale-[0.98] focus:outline-none focus:ring-2 focus:ring-primary-orange focus:ring-offset-2 focus:ring-offset-black transition disabled:opacity-60 disabled:cursor-not-allowed"
                     >
-                      Submit
+                      Continue
                     </button>
                   </form>
                 ) : (
                   <form className="space-y-5" onSubmit={handleOtpSubmit}>
-                    <h2 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">
-                      OTP
+                    <h2 className="text-xl sm:text-2xl font-bold text-white tracking-tight">
+                      Enter code
                     </h2>
-                    <p className="text-sm text-white">
-                      Enter The Code Sent On <span className="text-white font-medium">{email}</span>
+                    <p className="text-sm text-zinc-400">
+                      Sent to <span className="text-white font-medium">{email}</span>
                     </p>
                     <div className="flex gap-2 sm:gap-3 justify-center">
                       {otp.map((digit, i) => (
@@ -216,7 +224,7 @@ const SignInPage = () => {
                           onKeyDown={(e) => handleOtpKeyDown(i, e)}
                           onPaste={handleOtpPaste}
                           aria-label={`Digit ${i + 1} of ${OTP_LENGTH}`}
-                          className="w-11 h-11 sm:w-12 sm:h-12 rounded-lg border border-zinc-600 bg-zinc-900/80 text-white text-center text-lg font-semibold outline-none focus:border-primary-orange focus:ring-2 focus:ring-primary-orange/40 transition"
+                          className="w-11 h-11 sm:w-12 sm:h-12 rounded-xl border border-zinc-700 bg-black/50 text-white text-center text-lg font-semibold outline-none focus:border-primary-orange focus:ring-2 focus:ring-primary-orange/30 transition"
                         />
                       ))}
                     </div>
@@ -224,31 +232,27 @@ const SignInPage = () => {
                     <button
                       type="submit"
                       disabled={loading}
-                      className="w-full rounded-xl bg-primary-orange text-white font-semibold py-3.5 text-base hover:bg-primary-orange/90 focus:outline-none focus:ring-2 focus:ring-primary-orange focus:ring-offset-2 focus:ring-offset-zinc-800 transition disabled:opacity-60 disabled:cursor-not-allowed"
+                      className="w-full rounded-xl bg-primary-orange text-white font-semibold py-3.5 text-base hover:bg-primary-orange/90 active:scale-[0.98] focus:outline-none focus:ring-2 focus:ring-primary-orange focus:ring-offset-2 focus:ring-offset-black transition disabled:opacity-60 disabled:cursor-not-allowed"
                     >
-                      Submit
+                      Verify
                     </button>
                   </form>
                 )}
               </div>
 
-              <p className="mt-6 text-sm text-zinc-500">
+              <p className="mt-8 sm:mt-6 text-xs sm:text-sm text-zinc-500 max-w-md leading-relaxed">
                 QBounce analyzes your sports video in real time for form, timing, and control so you can train smarter.
               </p>
             </section>
 
-            {/* Right: Image in rounded frame with orange border */}
-            <section className="relative min-h-[260px] sm:min-h-[340px] md:min-h-0 md:self-stretch p-4 sm:p-6 md:p-6 lg:p-8 flex items-center justify-center">
-              <div className="relative w-full h-full min-h-[260px] sm:min-h-[340px] md:min-h-0 rounded-2xl border-2 border-primary-orange/50 overflow-hidden bg-zinc-900 shadow-inner">
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="relative w-[125%] min-w-[125%] h-[125%] min-h-[125%]">
-                    <img
-                      src="/images/sign-in-page-img-4.jpg"
-                      alt="Athletes with QBounce"
-                      className="absolute inset-0 w-full h-full object-cover object-center"
-                    />
-                  </div>
-                </div>
+            {/* Right: Image — hidden on mobile/small screens, full height on md+ */}
+            <section className="hidden md:flex relative md:h-auto md:min-h-0 md:self-stretch md:p-6 lg:p-8 items-center justify-center order-1 md:order-2">
+              <div className="relative w-full h-full rounded-2xl md:rounded-2xl border border-zinc-800 md:border-primary-orange/30 overflow-hidden bg-zinc-900">
+                <img
+                  src="/images/sign-in-page-img-4.jpg"
+                  alt="Athletes with QBounce"
+                  className="absolute inset-0 w-full h-full object-cover object-center"
+                />
               </div>
             </section>
           </div>

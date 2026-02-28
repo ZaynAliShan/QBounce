@@ -2,6 +2,8 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 const logo = '/images/logos/logo-cropped.png'
 
+const CONTACT_EMAIL = 'info@quietbounce.com'
+
 const Footer = () => {
   const footerLinks = {
     product: [
@@ -13,9 +15,8 @@ const Footer = () => {
       { label: 'Pricing', to: '/#pricing' },
     ],
     company: [
-      { label: 'About Us', to: '/#about' },
       { label: 'FAQ', to: '/faq' },
-      { label: 'Contact', to: '/#contact' },
+      { label: 'Contact', to: '/contact' },
     ],
     legal: [
       { label: 'Privacy Policy', to: '/privacy' },
@@ -83,21 +84,25 @@ const Footer = () => {
     },
   ]
 
+  const arrowIcon = (
+    <svg className="w-4 h-4 shrink-0 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden>
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+    </svg>
+  )
+
   return (
     <footer id="download" className="bg-black border-t border-gray-800">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 mb-8">
-          {/* Brand Column */}
-          <div className="lg:col-span-2">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-10 mb-8">
+          {/* Column 1: Brand */}
+          <div>
             <div className="mb-4">
               <img src={logo} alt="QBounce Logo" className="h-10 w-auto" />
             </div>
-            <p className="text-gray-400 mb-6 max-w-md">
+            <p className="text-gray-400 text-sm leading-relaxed max-w-xs mb-6">
               Track Every Move. Advanced AI analyzes every move, shot, and play - turning footage into actionable insights instantly.
             </p>
-            
-            {/* Social Links */}
-            <div className="flex gap-4 mb-6">
+            <div className="flex gap-4">
               {socialLinks.map((social) => (
                 <a
                   key={social.name}
@@ -111,34 +116,47 @@ const Footer = () => {
                 </a>
               ))}
             </div>
-
-            {/* App Store Links */}
-            <div className="flex flex-col sm:flex-row gap-3">
+            <div className="flex flex-col sm:flex-row gap-3 mt-6">
               {appStoreLinks.map((store) => (
                 <a
                   key={store.name}
                   href={store.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-2 bg-gray-900 border border-gray-800 rounded-lg px-4 py-2 hover:border-primary-orange transition-colors duration-200 text-white"
+                  className="flex items-center gap-2 bg-gray-900 border border-gray-800 rounded-lg px-4 py-2 hover:border-primary-orange transition-colors duration-200 text-white text-sm font-medium"
                 >
                   {store.icon}
-                  <span className="text-sm font-medium">{store.name}</span>
+                  <span>{store.name}</span>
                 </a>
               ))}
             </div>
           </div>
 
-          {/* Product Links */}
+          {/* Column 2: Address */}
           <div>
-            <h4 className="text-white font-semibold mb-4">Product</h4>
+            <h4 className="text-white font-semibold text-sm mb-4">Address</h4>
+            <a
+              href={`mailto:${CONTACT_EMAIL}`}
+              className="flex items-center gap-2 text-gray-400 hover:text-primary-orange transition-colors duration-200 text-sm"
+            >
+              <svg className="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden>
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+              </svg>
+              <span>{CONTACT_EMAIL}</span>
+            </a>
+          </div>
+
+          {/* Column 3: Links */}
+          <div>
+            <h4 className="text-white font-semibold text-sm mb-4">Quick Links</h4>
             <ul className="space-y-2">
               {footerLinks.product.map((link) => (
                 <li key={link.label}>
                   <Link
                     to={link.to}
-                    className="text-gray-400 hover:text-primary-orange transition-colors duration-200"
+                    className="flex items-center gap-2 text-gray-400 hover:text-primary-orange transition-colors duration-200 text-sm"
                   >
+                    {arrowIcon}
                     {link.label}
                   </Link>
                 </li>
@@ -146,50 +164,48 @@ const Footer = () => {
             </ul>
           </div>
 
-          {/* Company Links */}
+          {/* Column 4: Join for our newest products */}
           <div>
-            <h4 className="text-white font-semibold mb-4">Company</h4>
-            <ul className="space-y-2">
-              {footerLinks.company.map((link) => (
-                <li key={link.label}>
-                  <Link
-                    to={link.to}
-                    className="text-gray-400 hover:text-primary-orange transition-colors duration-200"
-                  >
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Legal Links */}
-          <div>
-            <h4 className="text-white font-semibold mb-4">Legal</h4>
-            <ul className="space-y-2">
-              {footerLinks.legal.map((link) => (
-                <li key={link.label}>
-                  <Link
-                    to={link.to}
-                    className="text-gray-400 hover:text-primary-orange transition-colors duration-200"
-                  >
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
+            <h4 className="text-white font-semibold text-sm mb-4">Join for our newest products</h4>
+            <form className="flex flex-col sm:flex-row gap-2" onSubmit={(e) => e.preventDefault()}>
+              <input
+                type="email"
+                placeholder="Your email"
+                className="flex-1 min-w-0 rounded-lg border border-gray-600 bg-gray-900 px-3 py-2.5 text-white text-sm placeholder:text-gray-500 outline-none focus:border-primary-orange focus:ring-1 focus:ring-primary-orange"
+                aria-label="Email for newsletter"
+              />
+              <button
+                type="submit"
+                className="rounded-lg bg-primary-orange text-black px-4 py-2.5 text-sm font-semibold hover:bg-primary-orange/90 transition-colors shrink-0"
+              >
+                Subscribe
+              </button>
+            </form>
           </div>
         </div>
 
         {/* Bottom Bar */}
-        <div className="border-t border-gray-800 pt-8">
-          <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-            <p className="text-gray-400 text-sm">
+        <div className="border-t border-primary-orange/40 pt-8">
+          <div className="flex flex-col md:grid md:grid-cols-3 items-center gap-4">
+            <p className="text-gray-400 text-sm order-2 md:order-none text-center md:text-left md:justify-self-start">
               © {new Date().getFullYear()} QBounce. All rights reserved.
             </p>
-            <p className="text-gray-400 text-sm">
+            <p className="text-gray-400 text-sm order-first md:order-none text-center">
               Made with <span className="text-primary-orange">♥</span> for athletes
             </p>
+            <div className="flex flex-wrap items-center justify-center md:justify-end gap-x-3 gap-y-2 text-sm text-gray-400 order-last">
+              {[footerLinks.legal[1], footerLinks.legal[0], ...footerLinks.company].map((link) => (
+                <React.Fragment key={link.label}>
+                  <Link
+                    to={link.to}
+                    className="hover:text-primary-orange transition-colors duration-200"
+                  >
+                    {link.label}
+                  </Link>
+                  <span className="text-gray-600 last:hidden">·</span>
+                </React.Fragment>
+              ))}
+            </div>
           </div>
         </div>
       </div>

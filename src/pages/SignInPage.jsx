@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react'
+import React, { useState, useRef } from 'react'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
@@ -9,7 +9,6 @@ import { SESSION_TOKEN_KEY } from '../lib/constants'
 const SEND_OTP_URL = 'https://prod.api.qbouncepro.com/api/send-otp'
 const CONFIRM_OTP_URL = 'https://prod.api.qbouncepro.com/api/confirm-otp'
 const OTP_LENGTH = 6
-const TOAST_DURATION_MS = 4000
 
 const SignInPage = () => {
   const { login } = useAuth()
@@ -21,14 +20,7 @@ const SignInPage = () => {
   const [otp, setOtp] = useState(Array(OTP_LENGTH).fill(''))
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
-  const [toast, setToast] = useState(null)
   const otpInputRefs = useRef([])
-
-  useEffect(() => {
-    if (!toast) return
-    const t = setTimeout(() => setToast(null), TOAST_DURATION_MS)
-    return () => clearTimeout(t)
-  }, [toast])
 
   const handleSendOtp = async (e) => {
     e.preventDefault()
@@ -124,12 +116,11 @@ const SignInPage = () => {
         localStorage.setItem(SESSION_TOKEN_KEY, data.data.session_token)
       }
       login()
-      setToast('Signed in successfully!')
       setOtp(Array(OTP_LENGTH).fill(''))
       const targetPath = redirectTo ? decodeURIComponent(redirectTo) : null
-      if (targetPath && isAllowedRedirect(targetPath)) {
-        navigate(targetPath, { replace: true })
-      }
+      const destination = targetPath && isAllowedRedirect(targetPath) ? targetPath : '/'
+      navigate(destination, { replace: true })
+      window.dispatchEvent(new CustomEvent('qbounce-toast', { detail: { message: 'Signed in successfully!' } }))
     } catch (err) {
       setError(err.message || 'Something went wrong. Please try again.')
     } finally {
@@ -150,15 +141,6 @@ const SignInPage = () => {
           <p className="text-white font-medium">
             {otpSent ? 'Verifying…' : 'Sending…'}
           </p>
-        </div>
-      )}
-      {toast && (
-        <div
-          className="fixed top-20 left-1/2 -translate-x-1/2 z-50 px-4 py-3 rounded-lg bg-green-600 text-white text-sm font-medium shadow-lg"
-          role="status"
-          aria-live="polite"
-        >
-          {toast}
         </div>
       )}
       <Header />

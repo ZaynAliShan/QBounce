@@ -24,6 +24,7 @@ function ContactPage() {
     setTimeout(() => {
       setStatus('success')
       setFormData({ firstName: '', lastName: '', email: '', message: '' })
+      window.dispatchEvent(new CustomEvent('qbounce-toast', { detail: { message: 'Success' } }))
     }, 800)
   }
 

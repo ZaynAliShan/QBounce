@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
 
-const CONTACT_EMAIL = 'info@quietbounce.com'
+const CONTACT_EMAIL = 'info@qbouncepro.com'
 
 function ContactPage() {
   const [formData, setFormData] = useState({

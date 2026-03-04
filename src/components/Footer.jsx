@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { useAuth } from '../contexts/AuthContext'
 const logo = '/images/logos/logo-cropped.png'
 
-const CONTACT_EMAIL = 'info@quietbounce.com'
+const CONTACT_EMAIL = 'info@qbouncepro.com'
 
 const Footer = () => {
   const { isLoggedIn } = useAuth()

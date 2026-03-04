@@ -16,26 +16,14 @@ const Header = ({ onGetStartedClick }) => {
   const [howToOpen, setHowToOpen] = useState(false)
   const [mobileHowToOpen, setMobileHowToOpen] = useState(false)
   const howToRef = React.useRef(null)
-  const { pathname } = useLocation()
-  const { isLoggedIn, logout } = useAuth()
-  const [loggingOut, setLoggingOut] = useState(false)
+  const { pathname, hash } = useLocation()
+  const { isLoggedIn } = useAuth()
 
   const isHowToChildActive = (to) => {
-    if (to === '/#how-it-works') return pathname === '/'
+    if (to === '/#how-it-works') return pathname === '/' && hash === '#how-it-works'
     return pathname === to
   }
   const isAnyHowToActive = howToDropdownItems.some((item) => isHowToChildActive(item.to))
-
-  const handleLogout = async (e) => {
-    e.preventDefault()
-    setLoggingOut(true)
-    try {
-      await logout()
-      setIsMenuOpen(false)
-    } finally {
-      setLoggingOut(false)
-    }
-  }
 
   const handleGetStarted = (e) => {
     e.preventDefault()
@@ -71,19 +59,24 @@ const Header = ({ onGetStartedClick }) => {
     return () => document.removeEventListener('mousedown', handleClickOutside)
   }, [howToOpen])
 
-  const navItems = [
-    ...(isLoggedIn ? [{ label: 'Home', to: '/home' }, { label: 'Train', to: '/train' }, { label: 'Leaderboard', to: '/leaderboard' }] : []),
-    ...(isLoggedIn
-      ? [{ label: 'How To', dropdown: howToDropdownItems }]
-      : [
-          { label: 'How It Works', to: '/#how-it-works' },
-          { label: 'How To Use', to: '/how-to-use' },
-          { label: 'How To Cast', to: '/how-to-cast' },
-        ]),
-    { label: 'Sports', to: '/#sports' },
-    { label: 'Pricing', to: '/#pricing' },
-    { label: 'Shop Link', href: 'https://qbouncesport.com/?trafficSource=qbouncepro.com', external: true },
-  ]
+  const navItems = isLoggedIn
+    ? [
+        { label: 'Home', to: '/home' },
+        { label: 'Train', to: '/train' },
+        { label: 'Leaderboard', to: '/leaderboard' },
+        { label: 'How To', dropdown: howToDropdownItems },
+        { label: 'Sports', to: '/#sports' },
+        { label: 'Pricing', to: '/#pricing' },
+        { label: 'Shop Link', href: 'https://qbouncesport.com/?trafficSource=qbouncepro.com', external: true },
+      ]
+    : [
+        { label: 'How It Works', to: '/#how-it-works' },
+        { label: 'Sports', to: '/#sports' },
+        { label: 'Pricing', to: '/#pricing' },
+        { label: 'How To Use', to: '/how-to-use' },
+        { label: 'How To Cast', to: '/how-to-cast' },
+        { label: 'Shop Link', href: 'https://qbouncesport.com/?trafficSource=qbouncepro.com', external: true },
+      ]
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-black/95 backdrop-blur-sm border-b border-primary-orange/20">
@@ -143,7 +136,21 @@ const Header = ({ onGetStartedClick }) => {
                   </div>
                 )
               }
-              const isActive = item.to && (item.to === '/train' ? pathname.startsWith('/train') : item.to === '/home' ? pathname === '/home' : item.to === '/#how-it-works' ? pathname === '/' : pathname === item.to) && (item.to === '/home' || item.to === '/train' || item.to === '/leaderboard' || item.to === '/#how-it-works' || item.to === '/how-to-use' || item.to === '/how-to-cast')
+              const isActive =
+                item.to &&
+                (item.to === '/train'
+                  ? pathname.startsWith('/train')
+                  : item.to === '/home'
+                  ? pathname === '/home'
+                  : item.to === '/#how-it-works'
+                  ? pathname === '/' && hash === '#how-it-works'
+                  : pathname === item.to) &&
+                (item.to === '/home' ||
+                  item.to === '/train' ||
+                  item.to === '/leaderboard' ||
+                  item.to === '/#how-it-works' ||
+                  item.to === '/how-to-use' ||
+                  item.to === '/how-to-cast')
               const linkClass = `font-medium transition-colors duration-200 text-sm xl:text-base whitespace-nowrap ${
                 isActive ? 'text-primary-orange border-b-2 border-primary-orange pb-0.5' : 'text-white hover:text-primary-orange'
               }`
@@ -184,14 +191,40 @@ const Header = ({ onGetStartedClick }) => {
                 </Link>
               )}
               {isLoggedIn ? (
-                <button
-                  type="button"
-                  onClick={handleLogout}
-                  disabled={loggingOut}
-                  className="border border-primary-orange text-primary-orange px-4 py-1.5 xl:px-6 xl:py-2 rounded-lg font-semibold text-sm xl:text-base hover:bg-primary-orange/10 transition-colors duration-200 disabled:opacity-60 whitespace-nowrap"
+                <Link
+                  to="/profile"
+                  className="border border-primary-orange text-primary-orange px-4 py-1.5 xl:px-6 xl:py-2 rounded-lg font-semibold text-sm xl:text-base hover:bg-primary-orange/10 transition-colors duration-200 whitespace-nowrap inline-flex items-center gap-2"
                 >
-                  {loggingOut ? 'Logging out…' : 'Log out'}
-                </button>
+                  <span className="leading-none inline-block">Profile</span>
+                  <svg
+                    className="w-6 h-6"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M12 2.75C7.44365 2.75 3.75 6.44365 3.75 11C3.75 15.5563 7.44365 19.25 12 19.25C16.5563 19.25 20.25 15.5563 20.25 11C20.25 6.44365 16.5563 2.75 12 2.75Z"
+                      stroke="currentColor"
+                      strokeWidth="1.6"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                    <path
+                      d="M12 12.25C13.7949 12.25 15.25 10.7949 15.25 9C15.25 7.20507 13.7949 5.75 12 5.75C10.2051 5.75 8.75 7.20507 8.75 9C8.75 10.7949 10.2051 12.25 12 12.25Z"
+                      stroke="currentColor"
+                      strokeWidth="1.6"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                    <path
+                      d="M7.75 17.75C8.48635 16.4073 10.0552 15.5 12 15.5C13.9448 15.5 15.5136 16.4073 16.25 17.75"
+                      stroke="currentColor"
+                      strokeWidth="1.6"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
+                </Link>
               ) : (
                 <Link
                   to="/sign-in"
@@ -304,7 +337,21 @@ const Header = ({ onGetStartedClick }) => {
                         </div>
                       )
                     }
-                    const isActive = item.to && (item.to === '/train' ? pathname.startsWith('/train') : item.to === '/home' ? pathname === '/home' : item.to === '/#how-it-works' ? pathname === '/' : pathname === item.to) && (item.to === '/home' || item.to === '/train' || item.to === '/leaderboard' || item.to === '/#how-it-works' || item.to === '/how-to-use' || item.to === '/how-to-cast')
+                    const isActive =
+                      item.to &&
+                      (item.to === '/train'
+                        ? pathname.startsWith('/train')
+                        : item.to === '/home'
+                        ? pathname === '/home'
+                        : item.to === '/#how-it-works'
+                        ? pathname === '/' && hash === '#how-it-works'
+                        : pathname === item.to) &&
+                      (item.to === '/home' ||
+                        item.to === '/train' ||
+                        item.to === '/leaderboard' ||
+                        item.to === '/#how-it-works' ||
+                        item.to === '/how-to-use' ||
+                        item.to === '/how-to-cast')
                     const linkClass = `block py-3 px-2 -mx-2 font-medium transition-colors duration-200 text-base rounded-lg ${isActive ? 'text-primary-orange bg-primary-orange/10' : 'text-white hover:text-primary-orange hover:bg-white/5'}`
                     if (item.external && item.href) {
                       return (
@@ -351,14 +398,43 @@ const Header = ({ onGetStartedClick }) => {
                     </Link>
                   )}
                   {isLoggedIn ? (
-                    <button
-                      type="button"
-                      onClick={handleLogout}
-                      disabled={loggingOut}
-                      className="w-full border border-primary-orange text-primary-orange px-6 py-3 rounded-lg font-semibold hover:bg-primary-orange/10 transition-colors duration-200 text-center disabled:opacity-60"
+                    <Link
+                      to="/profile"
+                      className="w-full bg-gray-100/5 text-white px-6 py-3 rounded-lg font-semibold hover:bg-gray-100/10 transition-colors duration-200 text-center block"
+                      onClick={() => setIsMenuOpen(false)}
                     >
-                      {loggingOut ? 'Logging out…' : 'Log out'}
-                    </button>
+                      <span className="inline-flex items-center justify-center gap-2 align-middle">
+                        <span className="leading-none inline-block">Profile</span>
+                        <svg
+                          className="w-6 h-6 text-primary-orange"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M12 2.75C7.44365 2.75 3.75 6.44365 3.75 11C3.75 15.5563 7.44365 19.25 12 19.25C16.5563 19.25 20.25 15.5563 20.25 11C20.25 6.44365 16.5563 2.75 12 2.75Z"
+                            stroke="currentColor"
+                            strokeWidth="1.6"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          />
+                          <path
+                            d="M12 12.25C13.7949 12.25 15.25 10.7949 15.25 9C15.25 7.20507 13.7949 5.75 12 5.75C10.2051 5.75 8.75 7.20507 8.75 9C8.75 10.7949 10.2051 12.25 12 12.25Z"
+                            stroke="currentColor"
+                            strokeWidth="1.6"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          />
+                          <path
+                            d="M7.75 17.75C8.48635 16.4073 10.0552 15.5 12 15.5C13.9448 15.5 15.5136 16.4073 16.25 17.75"
+                            stroke="currentColor"
+                            strokeWidth="1.6"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          />
+                        </svg>
+                      </span>
+                    </Link>
                   ) : (
                     <Link
                       to="/sign-in"

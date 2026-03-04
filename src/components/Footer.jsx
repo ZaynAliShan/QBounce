@@ -1,10 +1,15 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
+import { useAuth } from '../contexts/AuthContext'
 const logo = '/images/logos/logo-cropped.png'
 
 const CONTACT_EMAIL = 'info@quietbounce.com'
 
 const Footer = () => {
+  const { isLoggedIn } = useAuth()
+
+  const [howToOpen, setHowToOpen] = useState(false)
+
   const footerLinks = {
     product: [
       { label: 'Features', to: '/#features' },
@@ -90,6 +95,41 @@ const Footer = () => {
     </svg>
   )
 
+  const howToLinks = [
+    { label: 'How It Works', to: '/#how-it-works' },
+    { label: 'How To Use', to: '/how-to-use' },
+    { label: 'How To Cast', to: '/how-to-cast' },
+  ]
+
+  const quickLinks = isLoggedIn
+    ? [
+        { label: 'Home', to: '/home' },
+        { label: 'Train', to: '/train' },
+        { label: 'Leaderboard', to: '/leaderboard' },
+        { label: 'Sports', to: '/#sports' },
+        { label: 'Pricing', to: '/#pricing' },
+        {
+          label: 'Shop Link',
+          href: 'https://qbouncesport.com/?trafficSource=qbouncepro.com',
+          external: true,
+        },
+      ]
+    : [
+        { label: 'How It Works', to: '/#how-it-works' },
+        { label: 'Sports', to: '/#sports' },
+        { label: 'Pricing', to: '/#pricing' },
+        { label: 'How To Use', to: '/how-to-use' },
+        { label: 'How To Cast', to: '/how-to-cast' },
+        {
+          label: 'Shop Link',
+          href: 'https://qbouncesport.com/?trafficSource=qbouncepro.com',
+          external: true,
+        },
+      ]
+
+  const primaryQuickLinks = isLoggedIn ? quickLinks.slice(0, 3) : []
+  const secondaryQuickLinks = isLoggedIn ? quickLinks.slice(3) : quickLinks
+
   return (
     <footer id="download" className="bg-black border-t border-gray-800">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
@@ -150,15 +190,86 @@ const Footer = () => {
           <div>
             <h4 className="text-white font-semibold text-sm mb-4">Quick Links</h4>
             <ul className="space-y-2">
-              {footerLinks.product.map((link) => (
-                <li key={link.label}>
-                  <Link
-                    to={link.to}
-                    className="flex items-center gap-2 text-gray-400 hover:text-primary-orange transition-colors duration-200 text-sm"
+              {isLoggedIn &&
+                primaryQuickLinks.map((link) => (
+                  <li key={link.label}>
+                    <Link
+                      to={link.to}
+                      className="flex items-center gap-2 text-gray-400 hover:text-primary-orange transition-colors duration-200 text-sm"
+                    >
+                      {arrowIcon}
+                      {link.label}
+                    </Link>
+                  </li>
+                ))}
+
+              {isLoggedIn && (
+                <li>
+                  <button
+                    type="button"
+                    onClick={() => setHowToOpen((open) => !open)}
+                    className="flex w-full items-center text-gray-400 hover:text-primary-orange transition-colors duration-200 text-sm"
+                    aria-expanded={howToOpen}
                   >
-                    {arrowIcon}
-                    {link.label}
-                  </Link>
+                    <span className="inline-flex items-center gap-2">
+                      {arrowIcon}
+                      <span>How To</span>
+                      <svg
+                        className={`w-3.5 h-3.5 transition-transform duration-200 ${howToOpen ? 'rotate-180' : ''}`}
+                        viewBox="0 0 20 20"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                        aria-hidden
+                      >
+                        <path
+                          d="M5 8L10 13L15 8"
+                          stroke="currentColor"
+                          strokeWidth="1.5"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
+                      </svg>
+                    </span>
+                  </button>
+                  {howToOpen && (
+                    <ul className="mt-1 ml-6 space-y-1">
+                      {howToLinks.map((link) => (
+                        <li key={link.label}>
+                          <Link
+                            to={link.to}
+                            className="flex items-center gap-2 text-gray-400 hover:text-primary-orange transition-colors duration-200 text-sm"
+                          >
+                            {arrowIcon}
+                            {link.label}
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </li>
+              )}
+
+              {secondaryQuickLinks.map((link) => (
+                <li key={link.label}>
+                  {link.external && link.href ? (
+                    <a
+                      href={link.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center gap-2 text-gray-400 hover:text-primary-orange transition-colors duration-200 text-sm"
+                    >
+                      {arrowIcon}
+                      {link.label}
+                    </a>
+                  ) : (
+                    <Link
+                      to={link.to}
+                      className="flex items-center gap-2 text-gray-400 hover:text-primary-orange transition-colors duration-200 text-sm"
+                    >
+                      {arrowIcon}
+                      {link.label}
+                    </Link>
+                  )}
                 </li>
               ))}
             </ul>

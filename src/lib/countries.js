@@ -18,6 +18,9 @@ const COUNTRY_CODES = {
   'Algeria': 'dz', 'Iraq': 'iq', 'Qatar': 'qa', 'Kuwait': 'kw', 'Jordan': 'jo',
 }
 
+/** Sorted country names for profile dropdown */
+export const COUNTRY_NAMES = Object.keys(COUNTRY_CODES).sort()
+
 export function getCountryCode(countryName) {
   if (!countryName || typeof countryName !== 'string') return null
   const normalized = countryName.trim()

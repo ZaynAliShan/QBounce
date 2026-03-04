@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import Header from '../components/Header'
 import Hero from '../components/Hero'
 import Features from '../components/Features'
@@ -10,15 +10,14 @@ import SportsMetrics from '../components/SportsMetrics'
 import Testimonials from '../components/Testimonials'
 import Pricing from '../components/Pricing'
 import Footer from '../components/Footer'
-import DownloadModal from '../components/DownloadModal'
+import { useDownloadModal } from '../contexts/DownloadModalContext'
 
 function HomePage() {
-  const [showDownloadModal, setShowDownloadModal] = useState(false)
+  const { openDownloadModal } = useDownloadModal()
 
   return (
     <div className="min-h-screen bg-black">
-      <Header onGetStartedClick={() => setShowDownloadModal(true)} />
-      <DownloadModal isOpen={showDownloadModal} onClose={() => setShowDownloadModal(false)} />
+      <Header />
       <Hero />
       <Features />
       <WhatWeProvide />
@@ -27,7 +26,7 @@ function HomePage() {
       <TrainSmarter />
       <SportsMetrics />
       <Testimonials />
-      <Pricing onStartFreeTrialClick={() => setShowDownloadModal(true)} />
+      <Pricing onStartFreeTrialClick={openDownloadModal} />
       <Footer />
     </div>
   )

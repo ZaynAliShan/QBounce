@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { createPortal } from 'react-dom'
 import { Link, useLocation } from 'react-router-dom'
 import { useAuth } from '../contexts/AuthContext'
+import { useDownloadModal } from '../contexts/DownloadModalContext'
 
 const logo = '/images/logos/logo.png'
 
@@ -11,21 +12,36 @@ const howToDropdownItems = [
   { label: 'How It Works', to: '/#how-it-works' },
 ]
 
-const Header = ({ onGetStartedClick }) => {
+const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [howToOpen, setHowToOpen] = useState(false)
   const [mobileHowToOpen, setMobileHowToOpen] = useState(false)
   const howToRef = React.useRef(null)
   const { pathname, hash } = useLocation()
   const { isLoggedIn } = useAuth()
+  const { openDownloadModal } = useDownloadModal()
 
   const visibleHowToItems = isLoggedIn
     ? howToDropdownItems.filter((item) => item.label !== 'How It Works')
     : howToDropdownItems
 
+  const isHowToChildActive = (to) => {
+    if (to === '/#how-it-works') return pathname === '/' && hash === '#how-it-works'
+    return pathname === to
+  }
+  const isAnyHowToActive = isLoggedIn && visibleHowToItems.some((item) => isHowToChildActive(item.to))
+
+  const isNavItemActive = (item) => {
+    if (!isLoggedIn || !item.to) return false
+    if (item.to === '/home') return pathname === '/home'
+    if (item.to === '/train') return pathname.startsWith('/train')
+    if (item.to === '/leaderboard') return pathname === '/leaderboard'
+    return false
+  }
+
   const handleGetStarted = (e) => {
-    e.preventDefault()
-    onGetStartedClick?.()
+    e?.preventDefault()
+    openDownloadModal()
     setIsMenuOpen(false)
   }
 
@@ -93,7 +109,8 @@ const Header = ({ onGetStartedClick }) => {
             {navItems.map((item) => {
               if (item.dropdown) {
                 const linkClass =
-                  'font-medium transition-colors duration-200 text-sm xl:text-base whitespace-nowrap text-white hover:text-primary-orange'
+                  'font-medium transition-colors duration-200 text-sm xl:text-base whitespace-nowrap ' +
+                  (isAnyHowToActive ? 'text-primary-orange border-b-2 border-primary-orange pb-0.5' : 'text-white hover:text-primary-orange')
                 return (
                   <div key={item.label} className="relative" ref={howToRef}>
                     <button
@@ -110,23 +127,28 @@ const Header = ({ onGetStartedClick }) => {
                     </button>
                     {howToOpen && (
                       <div className="absolute top-full left-0 mt-1 py-1 min-w-[180px] bg-black/95 border border-primary-orange/20 rounded-lg shadow-xl z-50">
-                        {item.dropdown.map((sub) => (
-                          <Link
-                            key={sub.label}
-                            to={sub.to}
-                            className="block px-4 py-2 text-sm font-medium text-white hover:text-primary-orange hover:bg-white/5 transition-colors"
-                            onClick={() => setHowToOpen(false)}
-                          >
-                            {sub.label}
-                          </Link>
-                        ))}
+                        {item.dropdown.map((sub) => {
+                          const subActive = isLoggedIn && isHowToChildActive(sub.to)
+                          return (
+                            <Link
+                              key={sub.label}
+                              to={sub.to}
+                              className={`block px-4 py-2 text-sm font-medium transition-colors ${subActive ? 'text-primary-orange bg-primary-orange/10' : 'text-white hover:text-primary-orange hover:bg-white/5'}`}
+                              onClick={() => setHowToOpen(false)}
+                            >
+                              {sub.label}
+                            </Link>
+                          )
+                        })}
                       </div>
                     )}
                   </div>
                 )
               }
+              const active = isNavItemActive(item)
               const linkClass =
-                'font-medium transition-colors duration-200 text-sm xl:text-base whitespace-nowrap text-white hover:text-primary-orange'
+                'font-medium transition-colors duration-200 text-sm xl:text-base whitespace-nowrap ' +
+                (active ? 'text-primary-orange border-b-2 border-primary-orange pb-0.5' : 'text-white hover:text-primary-orange')
               if (item.external && item.href) {
                 return (
                   <a
@@ -147,22 +169,22 @@ const Header = ({ onGetStartedClick }) => {
               )
             })}
             <div className="flex items-center gap-2 xl:gap-3 flex-shrink-0 ml-1">
-              {onGetStartedClick ? (
-                <button
-                  type="button"
-                  onClick={handleGetStarted}
-                  className="bg-primary-orange text-black px-4 py-1.5 xl:px-6 xl:py-2 rounded-lg font-semibold text-sm xl:text-base hover:bg-primary-orange/90 transition-colors duration-200 whitespace-nowrap"
-                >
-                  Get Started
-                </button>
-              ) : (
-                <Link
-                  to="/"
-                  className="bg-primary-orange text-black px-4 py-1.5 xl:px-6 xl:py-2 rounded-lg font-semibold text-sm xl:text-base hover:bg-primary-orange/90 transition-colors duration-200 inline-block whitespace-nowrap"
-                >
-                  Get Started
-                </Link>
-              )}
+              <button
+                type="button"
+                onClick={handleGetStarted}
+                className="bg-primary-orange text-black px-4 py-1.5 xl:px-6 xl:py-2 rounded-lg font-semibold text-sm xl:text-base hover:bg-primary-orange/90 transition-colors duration-200 whitespace-nowrap inline-flex items-center gap-2"
+              >
+                {isLoggedIn ? 'Get App' : 'Get Started'}
+                {isLoggedIn && (
+                  <img
+                    src="https://img.icons8.com/ios/100/iphone14-pro.png"
+                    alt=""
+                    className="w-5 h-5 xl:w-6 xl:h-6 object-contain"
+                    width={24}
+                    height={24}
+                  />
+                )}
+              </button>
               {isLoggedIn ? (
                 <Link
                   to="/profile"
@@ -273,12 +295,13 @@ const Header = ({ onGetStartedClick }) => {
                 <nav className="space-y-1" aria-label="Main">
                   {navItems.map((item) => {
                     if (item.dropdown) {
+                      const mobileHowToActive = isAnyHowToActive
                       return (
                         <div key={item.label}>
                           <button
                             type="button"
                             onClick={() => setMobileHowToOpen((o) => !o)}
-                            className="block w-full text-left py-3 px-2 -mx-2 font-medium transition-colors duration-200 text-base rounded-lg flex items-center justify-between text-white hover:text-primary-orange hover:bg-white/5"
+                            className={`block w-full text-left py-3 px-2 -mx-2 font-medium transition-colors duration-200 text-base rounded-lg flex items-center justify-between ${mobileHowToActive ? 'text-primary-orange bg-primary-orange/10' : 'text-white hover:text-primary-orange hover:bg-white/5'}`}
                             aria-expanded={mobileHowToOpen}
                           >
                             {item.label}
@@ -288,26 +311,31 @@ const Header = ({ onGetStartedClick }) => {
                           </button>
                           {mobileHowToOpen && (
                             <div className="pl-3 mt-1 space-y-0.5 border-l-2 border-gray-700 ml-2">
-                              {item.dropdown.map((sub) => (
-                                <Link
-                                  key={sub.label}
-                                  to={sub.to}
-                                  className="block py-2.5 px-2 -mx-2 text-sm font-medium rounded-lg text-white hover:text-primary-orange hover:bg-white/5 transition-colors"
-                                  onClick={() => {
-                                    setMobileHowToOpen(false)
-                                    setIsMenuOpen(false)
-                                  }}
-                                >
-                                  {sub.label}
-                                </Link>
-                              ))}
+                              {item.dropdown.map((sub) => {
+                                const subActive = isLoggedIn && isHowToChildActive(sub.to)
+                                return (
+                                  <Link
+                                    key={sub.label}
+                                    to={sub.to}
+                                    className={`block py-2.5 px-2 -mx-2 text-sm font-medium rounded-lg transition-colors ${subActive ? 'text-primary-orange bg-primary-orange/10' : 'text-white hover:text-primary-orange hover:bg-white/5'}`}
+                                    onClick={() => {
+                                      setMobileHowToOpen(false)
+                                      setIsMenuOpen(false)
+                                    }}
+                                  >
+                                    {sub.label}
+                                  </Link>
+                                )
+                              })}
                             </div>
                           )}
                         </div>
                       )
                     }
+                    const mobileActive = isNavItemActive(item)
                     const linkClass =
-                      'block py-3 px-2 -mx-2 font-medium transition-colors duration-200 text-base rounded-lg text-white hover:text-primary-orange hover:bg-white/5'
+                      'block py-3 px-2 -mx-2 font-medium transition-colors duration-200 text-base rounded-lg ' +
+                      (mobileActive ? 'text-primary-orange bg-primary-orange/10' : 'text-white hover:text-primary-orange hover:bg-white/5')
                     if (item.external && item.href) {
                       return (
                         <a
@@ -335,23 +363,22 @@ const Header = ({ onGetStartedClick }) => {
                   })}
                 </nav>
                 <div className="mt-6 pt-4 border-t border-gray-800 flex flex-col gap-2">
-                  {onGetStartedClick ? (
-                    <button
-                      type="button"
-                      onClick={handleGetStarted}
-                      className="w-full bg-primary-orange text-black px-6 py-3 rounded-lg font-semibold hover:bg-primary-orange/90 transition-colors duration-200 text-center"
-                    >
-                      Get Started
-                    </button>
-                  ) : (
-                    <Link
-                      to="/"
-                      className="w-full bg-primary-orange text-black px-6 py-3 rounded-lg font-semibold hover:bg-primary-orange/90 transition-colors duration-200 text-center block"
-                      onClick={() => setIsMenuOpen(false)}
-                    >
-                      Get Started
-                    </Link>
-                  )}
+                  <button
+                    type="button"
+                    onClick={handleGetStarted}
+                    className="w-full bg-primary-orange text-black px-6 py-3 rounded-lg font-semibold hover:bg-primary-orange/90 transition-colors duration-200 text-center inline-flex items-center justify-center gap-2"
+                  >
+                    {isLoggedIn ? 'Get App' : 'Get Started'}
+                    {isLoggedIn && (
+                      <img
+                        src="https://img.icons8.com/ios/100/iphone14-pro.png"
+                        alt=""
+                        className="w-6 h-6 object-contain"
+                        width={24}
+                        height={24}
+                      />
+                    )}
+                  </button>
                   {isLoggedIn ? (
                     <Link
                       to="/profile"

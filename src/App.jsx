@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
 import { BrowserRouter, Routes, Route, useLocation, Navigate } from 'react-router-dom'
 import { AuthProvider } from './contexts/AuthContext'
+import { DownloadModalProvider } from './contexts/DownloadModalContext'
 import ToastListener from './components/ToastListener'
 import { ProtectedRoute } from './components/ProtectedRoute'
 import HomePage from './pages/HomePage'
@@ -47,9 +48,10 @@ function App() {
   return (
     <BrowserRouter>
       <AuthProvider>
-        <ScrollToTop />
-        <ToastListener />
-        <Routes>
+        <DownloadModalProvider>
+          <ScrollToTop />
+          <ToastListener />
+          <Routes>
           <Route path="/" element={<RootRoute />} />
           <Route path="/faq" element={<FAQPage />} />
           <Route path="/terms" element={<TermsPage />} />
@@ -63,7 +65,8 @@ function App() {
           <Route path="/how-to-cast" element={<ProtectedRoute><HowToCastPage /></ProtectedRoute>} />
           <Route path="/leaderboard" element={<ProtectedRoute><LeaderboardPage /></ProtectedRoute>} />
           <Route path="/profile" element={<ProtectedRoute><ProfilePage /></ProtectedRoute>} />
-        </Routes>
+          </Routes>
+        </DownloadModalProvider>
       </AuthProvider>
     </BrowserRouter>
   )

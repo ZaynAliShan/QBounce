@@ -4,7 +4,7 @@ const Pricing = ({ onStartFreeTrialClick }) => {
   const plans = [
     {
       name: 'Starter',
-      price: '$9.99',
+      price: '$19.99',
       period: '/month',
       description: 'Perfect for individual athletes',
       features: [
@@ -18,7 +18,7 @@ const Pricing = ({ onStartFreeTrialClick }) => {
     },
     {
       name: 'Pro',
-      price: '$19.99',
+      price: '$29.99',
       period: '/month',
       description: 'For serious athletes and coaches',
       features: [
@@ -113,7 +113,7 @@ const Pricing = ({ onStartFreeTrialClick }) => {
 
                 {plan.name === 'Team' ? (
                   <a
-                    href="#contact"
+                    href="/contact"
                     className="block w-full text-center py-3 rounded-lg font-semibold transition-colors duration-200 bg-gray-800 text-white hover:bg-gray-700 border border-gray-700"
                   >
                     Contact Sales
@@ -140,7 +140,7 @@ const Pricing = ({ onStartFreeTrialClick }) => {
           <p className="text-gray-400 mb-4">
             All plans include a 30-day money-back guarantee
           </p>
-          <a href="#contact" className="text-primary-orange hover:underline">
+          <a href="/contact" className="text-primary-orange hover:underline">
             Have questions? Contact us
           </a>
         </div>

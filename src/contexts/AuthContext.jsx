@@ -28,11 +28,13 @@ export function AuthProvider({ children }) {
         // use default message
       }
     } finally {
+      // Clear session and broadcast logout
       localStorage.removeItem(SESSION_TOKEN_KEY)
-      setIsLoggedIn(false)
       window.dispatchEvent(new CustomEvent('qbounce-toast', { detail: { message } }))
-      // Always send the user back to the public landing page after logout
-      window.location.href = '/'
+
+      // Hard-redirect to public homepage so users always land there
+      // and don't briefly see the sign-in page.
+      window.location.replace('/')
     }
   }, [])
 

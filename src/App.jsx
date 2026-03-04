@@ -15,6 +15,7 @@ import TrainPage from './pages/TrainPage'
 import AppHomePage from './pages/AppHomePage'
 import LeaderboardPage from './pages/LeaderboardPage'
 import ProfilePage from './pages/ProfilePage'
+import { useAuth } from './contexts/AuthContext'
 
 function ScrollToTop() {
   const { pathname, hash } = useLocation()
@@ -34,6 +35,14 @@ function ScrollToTop() {
   return null
 }
 
+function RootRoute() {
+  const { isLoggedIn } = useAuth()
+  if (isLoggedIn) {
+    return <Navigate to="/home" replace />
+  }
+  return <HomePage />
+}
+
 function App() {
   return (
     <BrowserRouter>
@@ -41,11 +50,11 @@ function App() {
         <ScrollToTop />
         <ToastListener />
         <Routes>
-          <Route path="/" element={<HomePage />} />
+          <Route path="/" element={<RootRoute />} />
           <Route path="/faq" element={<FAQPage />} />
           <Route path="/terms" element={<TermsPage />} />
           <Route path="/privacy" element={<PrivacyPage />} />
-          <Route path="/contact" element={<ProtectedRoute><ContactPage /></ProtectedRoute>} />
+          <Route path="/contact" element={<ContactPage />} />
           <Route path="/sign-in" element={<SignInPage />} />
           <Route path="/home" element={<ProtectedRoute><AppHomePage /></ProtectedRoute>} />
           <Route path="/train" element={<ProtectedRoute><Navigate to="/train/beginner/0" replace /></ProtectedRoute>} />

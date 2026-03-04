@@ -96,9 +96,9 @@ const Footer = () => {
   )
 
   const howToLinks = [
-    { label: 'How It Works', to: '/#how-it-works' },
-    { label: 'How To Use', to: '/how-to-use' },
     { label: 'How To Cast', to: '/how-to-cast' },
+    { label: 'How To Use', to: '/how-to-use' },
+    { label: 'How It Works', to: '/#how-it-works' },
   ]
 
   const quickLinks = isLoggedIn
@@ -106,8 +106,6 @@ const Footer = () => {
         { label: 'Home', to: '/home' },
         { label: 'Train', to: '/train' },
         { label: 'Leaderboard', to: '/leaderboard' },
-        { label: 'Sports', to: '/#sports' },
-        { label: 'Pricing', to: '/#pricing' },
         {
           label: 'Shop Link',
           href: 'https://qbouncesport.com/?trafficSource=qbouncepro.com',
@@ -115,11 +113,10 @@ const Footer = () => {
         },
       ]
     : [
+        { label: 'Features', to: '/#features' },
         { label: 'How It Works', to: '/#how-it-works' },
         { label: 'Sports', to: '/#sports' },
         { label: 'Pricing', to: '/#pricing' },
-        { label: 'How To Use', to: '/how-to-use' },
-        { label: 'How To Cast', to: '/how-to-cast' },
         {
           label: 'Shop Link',
           href: 'https://qbouncesport.com/?trafficSource=qbouncepro.com',
@@ -233,7 +230,9 @@ const Footer = () => {
                   </button>
                   {howToOpen && (
                     <ul className="mt-1 ml-6 space-y-1">
-                      {howToLinks.map((link) => (
+                      {howToLinks
+                        .filter((link) => (isLoggedIn ? link.label !== 'How It Works' : true))
+                        .map((link) => (
                         <li key={link.label}>
                           <Link
                             to={link.to}

@@ -174,7 +174,7 @@ const Header = () => {
                 onClick={handleGetStarted}
                 className="bg-primary-orange text-black px-4 py-1.5 xl:px-6 xl:py-2 rounded-lg font-semibold text-sm xl:text-base hover:bg-primary-orange/90 transition-colors duration-200 whitespace-nowrap inline-flex items-center gap-2"
               >
-                {isLoggedIn ? 'Get App' : 'Get Started'}
+                {isLoggedIn ? 'Get the app' : 'Get Started'}
                 {isLoggedIn && (
                   <img
                     src="https://img.icons8.com/ios/100/iphone14-pro.png"

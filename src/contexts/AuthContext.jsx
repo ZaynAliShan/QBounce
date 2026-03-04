@@ -31,6 +31,8 @@ export function AuthProvider({ children }) {
       localStorage.removeItem(SESSION_TOKEN_KEY)
       setIsLoggedIn(false)
       window.dispatchEvent(new CustomEvent('qbounce-toast', { detail: { message } }))
+      // Always send the user back to the public landing page after logout
+      window.location.href = '/'
     }
   }, [])
 

@@ -139,7 +139,7 @@ const SignInPage = () => {
           aria-label={otpSent ? 'Verifying OTP…' : 'Sending OTP…'}
         >
           <img src="/images/loader.gif" alt="" className="h-24 w-24 sm:h-28 sm:w-28 object-contain" aria-hidden />
-          <p className="text-white font-medium">
+          <p className="text-gray-400 text-base">
             {otpSent ? 'Verifying…' : 'Sending…'}
           </p>
         </div>

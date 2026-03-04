@@ -26,13 +26,14 @@ export default function UserCard({ onUserLoaded }) {
 
   if (!user) {
     return (
-      <div className="rounded-2xl border-2 border-gray-800 bg-gray-900/50 p-8 animate-pulse overflow-hidden">
-        <div className="flex flex-col items-center gap-4">
-          <div className="w-36 h-36 rounded-full bg-gray-800 ring-4 ring-gray-700/50" />
-          <div className="h-6 w-36 bg-gray-800 rounded-lg" />
-          <div className="h-4 w-28 bg-gray-800 rounded" />
-          <div className="h-10 w-24 bg-gray-800 rounded-full" />
-        </div>
+      <div className="rounded-2xl border-2 border-gray-800 bg-gray-900/70 p-8 overflow-hidden flex flex-col items-center justify-center gap-4 text-center">
+        <img
+          src="/images/loader.gif"
+          alt=""
+          className="h-16 w-16 sm:h-20 sm:w-20 object-contain"
+          aria-hidden
+        />
+        <p className="text-gray-400 text-sm">Loading your profile…</p>
       </div>
     )
   }

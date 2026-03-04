@@ -12,6 +12,10 @@ const VALID_CATEGORIES = ['beginner', 'advanced', 'pro', 'master']
 export default function TrainPage() {
   const { category, videoId } = useParams()
   const [firstUnlocked, setFirstUnlocked] = useState(null)
+  const [loading, setLoading] = useState(() => {
+    const normalized = videoId === undefined || videoId === '' ? 0 : Number(videoId)
+    return normalized === 0
+  })
 
   const isCategoryValid = category && VALID_CATEGORIES.includes(category)
   const effectiveCategory = isCategoryValid ? category : 'beginner'
@@ -21,10 +25,16 @@ export default function TrainPage() {
 
   const setFirstUnlockedStable = useCallback((id) => {
     setFirstUnlocked((prev) => (prev != null ? prev : id))
+    setLoading(false)
   }, [])
 
   useEffect(() => {
     setFirstUnlocked(null)
+    if (normalizedVideoId !== 0) {
+      setLoading(false)
+    } else {
+      setLoading(true)
+    }
   }, [effectiveCategory])
 
   if (!category) {
@@ -37,6 +47,22 @@ export default function TrainPage() {
 
   return (
     <div className="min-h-screen flex flex-col bg-black">
+      {loading && (
+        <div
+          className="fixed inset-0 z-50 flex flex-col items-center justify-center gap-4 bg-black/70 backdrop-blur-sm"
+          role="status"
+          aria-live="polite"
+          aria-label="Loading training…"
+        >
+          <img
+            src="/images/loader.gif"
+            alt=""
+            className="h-24 w-24 sm:h-28 sm:w-28 object-contain"
+            aria-hidden
+          />
+          <p className="text-gray-400 text-base">Loading training…</p>
+        </div>
+      )}
       <Header />
       <main className="flex-1 pt-14 sm:pt-16 md:pt-20 pb-12 sm:pb-14 px-3 sm:px-4 md:px-6 lg:px-8">
         <div className="max-w-6xl mx-auto w-full">

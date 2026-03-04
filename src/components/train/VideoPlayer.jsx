@@ -53,8 +53,14 @@ export default function VideoPlayer({ videoId }) {
 
   if (loading) {
     return (
-      <div className="rounded-xl border border-gray-800 bg-gray-900/50 aspect-video flex items-center justify-center">
-        <div className="text-gray-500 font-medium">Loading video…</div>
+      <div className="rounded-xl border border-gray-800 bg-gray-900/70 aspect-video flex flex-col items-center justify-center gap-3">
+        <img
+          src="/images/loader.gif"
+          alt=""
+          className="h-14 w-14 sm:h-16 sm:w-16 object-contain"
+          aria-hidden
+        />
+        <p className="text-gray-400 text-sm">Loading video…</p>
       </div>
     )
   }

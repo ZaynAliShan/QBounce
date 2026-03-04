@@ -59,7 +59,7 @@ export default function LeaderboardPage() {
   return (
     <div className="min-h-screen flex flex-col bg-black">
       <Header />
-      <main className="flex-1 pt-16 sm:pt-20 pb-14 px-4 sm:px-6 lg:px-8">
+      <main className="flex-1 pt-24 sm:pt-28 pb-14 px-4 sm:px-6 lg:px-8">
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center justify-between gap-4 mb-6">
             <h1 className="text-2xl sm:text-4xl font-bold text-white uppercase tracking-wide">
@@ -90,8 +90,19 @@ export default function LeaderboardPage() {
           </div>
 
           {loading && (
-            <div className="rounded-xl border border-gray-800 bg-gray-900/50 p-8 text-center text-gray-500">
-              Loading…
+            <div
+              className="rounded-2xl border border-gray-800 bg-gray-900/70 p-8 sm:p-10 flex flex-col items-center justify-center gap-4 text-center"
+              role="status"
+              aria-live="polite"
+              aria-label="Loading leaderboard…"
+            >
+              <img
+                src="/images/loader.gif"
+                alt=""
+                className="h-16 w-16 sm:h-20 sm:w-20 object-contain"
+                aria-hidden
+              />
+              <p className="text-gray-400 text-sm">Loading leaderboard…</p>
             </div>
           )}
 

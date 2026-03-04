@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom'
+import { BrowserRouter, Routes, Route, useLocation, Navigate } from 'react-router-dom'
 import { AuthProvider } from './contexts/AuthContext'
 import ToastListener from './components/ToastListener'
 import { ProtectedRoute } from './components/ProtectedRoute'
@@ -11,6 +11,10 @@ import ContactPage from './pages/ContactPage'
 import SignInPage from './pages/SignInPage'
 import HowToUsePage from './pages/HowToUsePage'
 import HowToCastPage from './pages/HowToCastPage'
+import TrainPage from './pages/TrainPage'
+import AppHomePage from './pages/AppHomePage'
+import LeaderboardPage from './pages/LeaderboardPage'
+import ProfilePage from './pages/ProfilePage'
 
 function ScrollToTop() {
   const { pathname, hash } = useLocation()
@@ -43,8 +47,13 @@ function App() {
           <Route path="/privacy" element={<PrivacyPage />} />
           <Route path="/contact" element={<ProtectedRoute><ContactPage /></ProtectedRoute>} />
           <Route path="/sign-in" element={<SignInPage />} />
+          <Route path="/home" element={<ProtectedRoute><AppHomePage /></ProtectedRoute>} />
+          <Route path="/train" element={<ProtectedRoute><Navigate to="/train/beginner/0" replace /></ProtectedRoute>} />
+          <Route path="/train/:category/:videoId" element={<ProtectedRoute><TrainPage /></ProtectedRoute>} />
           <Route path="/how-to-use" element={<ProtectedRoute><HowToUsePage /></ProtectedRoute>} />
           <Route path="/how-to-cast" element={<ProtectedRoute><HowToCastPage /></ProtectedRoute>} />
+          <Route path="/leaderboard" element={<ProtectedRoute><LeaderboardPage /></ProtectedRoute>} />
+          <Route path="/profile" element={<ProtectedRoute><ProfilePage /></ProtectedRoute>} />
         </Routes>
       </AuthProvider>
     </BrowserRouter>

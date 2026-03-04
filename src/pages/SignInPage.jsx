@@ -117,8 +117,9 @@ const SignInPage = () => {
       }
       login()
       setOtp(Array(OTP_LENGTH).fill(''))
+      // After login: go to redirect param if allowed, otherwise always home
       const targetPath = redirectTo ? decodeURIComponent(redirectTo) : null
-      const destination = targetPath && isAllowedRedirect(targetPath) ? targetPath : '/'
+      const destination = (targetPath && isAllowedRedirect(targetPath)) ? targetPath : '/home'
       navigate(destination, { replace: true })
       window.dispatchEvent(new CustomEvent('qbounce-toast', { detail: { message: 'Signed in successfully!' } }))
     } catch (err) {

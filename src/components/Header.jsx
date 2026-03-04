@@ -5,11 +5,26 @@ import { useAuth } from '../contexts/AuthContext'
 
 const logo = '/images/logos/logo-cropped.png'
 
+const howToDropdownItems = [
+  { label: 'How It Works', to: '/#how-it-works' },
+  { label: 'How To Use', to: '/how-to-use' },
+  { label: 'How To Cast', to: '/how-to-cast' },
+]
+
 const Header = ({ onGetStartedClick }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const [howToOpen, setHowToOpen] = useState(false)
+  const [mobileHowToOpen, setMobileHowToOpen] = useState(false)
+  const howToRef = React.useRef(null)
   const { pathname } = useLocation()
   const { isLoggedIn, logout } = useAuth()
   const [loggingOut, setLoggingOut] = useState(false)
+
+  const isHowToChildActive = (to) => {
+    if (to === '/#how-it-works') return pathname === '/'
+    return pathname === to
+  }
+  const isAnyHowToActive = howToDropdownItems.some((item) => isHowToChildActive(item.to))
 
   const handleLogout = async (e) => {
     e.preventDefault()
@@ -30,7 +45,10 @@ const Header = ({ onGetStartedClick }) => {
 
   // Lock body scroll when drawer is open; close drawer on Escape
   useEffect(() => {
-    if (!isMenuOpen) return
+    if (!isMenuOpen) {
+      setMobileHowToOpen(false)
+      return
+    }
     const originalOverflow = document.body.style.overflow
     document.body.style.overflow = 'hidden'
     const handleEscape = (e) => {
@@ -43,13 +61,27 @@ const Header = ({ onGetStartedClick }) => {
     }
   }, [isMenuOpen])
 
+  // Close desktop "How To" dropdown when clicking outside
+  useEffect(() => {
+    if (!howToOpen) return
+    const handleClickOutside = (e) => {
+      if (howToRef.current && !howToRef.current.contains(e.target)) setHowToOpen(false)
+    }
+    document.addEventListener('mousedown', handleClickOutside)
+    return () => document.removeEventListener('mousedown', handleClickOutside)
+  }, [howToOpen])
+
   const navItems = [
-    { label: 'Features', to: '/#features' },
-    { label: 'How It Works', to: '/#how-it-works' },
+    ...(isLoggedIn ? [{ label: 'Home', to: '/home' }, { label: 'Train', to: '/train' }, { label: 'Leaderboard', to: '/leaderboard' }] : []),
+    ...(isLoggedIn
+      ? [{ label: 'How To', dropdown: howToDropdownItems }]
+      : [
+          { label: 'How It Works', to: '/#how-it-works' },
+          { label: 'How To Use', to: '/how-to-use' },
+          { label: 'How To Cast', to: '/how-to-cast' },
+        ]),
     { label: 'Sports', to: '/#sports' },
     { label: 'Pricing', to: '/#pricing' },
-    { label: 'How To Use', to: '/how-to-use' },
-    { label: 'How To Cast', to: '/how-to-cast' },
     { label: 'Shop Link', href: 'https://qbouncesport.com/?trafficSource=qbouncepro.com', external: true },
   ]
 
@@ -71,7 +103,47 @@ const Header = ({ onGetStartedClick }) => {
           {/* Desktop Navigation - visible from lg so all links fit without cramping */}
           <div className="hidden lg:flex items-center gap-5 xl:gap-6 flex-shrink min-w-0">
             {navItems.map((item) => {
-              const isActive = item.to && pathname === item.to && (item.to === '/how-to-use' || item.to === '/how-to-cast')
+              if (item.dropdown) {
+                const linkClass = `font-medium transition-colors duration-200 text-sm xl:text-base whitespace-nowrap ${
+                  isAnyHowToActive ? 'text-primary-orange border-b-2 border-primary-orange pb-0.5' : 'text-white hover:text-primary-orange'
+                }`
+                return (
+                  <div key={item.label} className="relative" ref={howToRef}>
+                    <button
+                      type="button"
+                      onClick={() => setHowToOpen((o) => !o)}
+                      className={linkClass}
+                      aria-expanded={howToOpen}
+                      aria-haspopup="true"
+                    >
+                      {item.label}
+                      <svg className="inline-block w-4 h-4 ml-0.5 align-middle opacity-80" fill="none" stroke="currentColor" viewBox="0 0 24 24" style={{ transform: howToOpen ? 'rotate(180deg)' : 'none' }}>
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                      </svg>
+                    </button>
+                    {howToOpen && (
+                      <div className="absolute top-full left-0 mt-1 py-1 min-w-[180px] bg-black/95 border border-primary-orange/20 rounded-lg shadow-xl z-50">
+                        {item.dropdown.map((sub) => {
+                          const subActive = isHowToChildActive(sub.to)
+                          return (
+                            <Link
+                              key={sub.label}
+                              to={sub.to}
+                              className={`block px-4 py-2 text-sm font-medium transition-colors ${
+                                subActive ? 'text-primary-orange bg-primary-orange/10' : 'text-white hover:text-primary-orange hover:bg-white/5'
+                              }`}
+                              onClick={() => setHowToOpen(false)}
+                            >
+                              {sub.label}
+                            </Link>
+                          )
+                        })}
+                      </div>
+                    )}
+                  </div>
+                )
+              }
+              const isActive = item.to && (item.to === '/train' ? pathname.startsWith('/train') : item.to === '/home' ? pathname === '/home' : item.to === '/#how-it-works' ? pathname === '/' : pathname === item.to) && (item.to === '/home' || item.to === '/train' || item.to === '/leaderboard' || item.to === '/#how-it-works' || item.to === '/how-to-use' || item.to === '/how-to-cast')
               const linkClass = `font-medium transition-colors duration-200 text-sm xl:text-base whitespace-nowrap ${
                 isActive ? 'text-primary-orange border-b-2 border-primary-orange pb-0.5' : 'text-white hover:text-primary-orange'
               }`
@@ -194,7 +266,45 @@ const Header = ({ onGetStartedClick }) => {
               <div className="flex-1 min-h-0 overflow-y-auto py-4 px-4 sm:px-6">
                 <nav className="space-y-1" aria-label="Main">
                   {navItems.map((item) => {
-                    const isActive = item.to && pathname === item.to && (item.to === '/how-to-use' || item.to === '/how-to-cast')
+                    if (item.dropdown) {
+                      return (
+                        <div key={item.label}>
+                          <button
+                            type="button"
+                            onClick={() => setMobileHowToOpen((o) => !o)}
+                            className={`block w-full text-left py-3 px-2 -mx-2 font-medium transition-colors duration-200 text-base rounded-lg flex items-center justify-between ${
+                              isAnyHowToActive ? 'text-primary-orange bg-primary-orange/10' : 'text-white hover:text-primary-orange hover:bg-white/5'
+                            }`}
+                            aria-expanded={mobileHowToOpen}
+                          >
+                            {item.label}
+                            <svg className="w-5 h-5 flex-shrink-0" style={{ transform: mobileHowToOpen ? 'rotate(180deg)' : 'none' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                            </svg>
+                          </button>
+                          {mobileHowToOpen && (
+                            <div className="pl-3 mt-1 space-y-0.5 border-l-2 border-gray-700 ml-2">
+                              {item.dropdown.map((sub) => {
+                                const subActive = isHowToChildActive(sub.to)
+                                return (
+                                  <Link
+                                    key={sub.label}
+                                    to={sub.to}
+                                    className={`block py-2.5 px-2 -mx-2 text-sm font-medium rounded-lg transition-colors ${
+                                      subActive ? 'text-primary-orange bg-primary-orange/10' : 'text-white hover:text-primary-orange hover:bg-white/5'
+                                    }`}
+                                    onClick={() => { setMobileHowToOpen(false); setIsMenuOpen(false) }}
+                                  >
+                                    {sub.label}
+                                  </Link>
+                                )
+                              })}
+                            </div>
+                          )}
+                        </div>
+                      )
+                    }
+                    const isActive = item.to && (item.to === '/train' ? pathname.startsWith('/train') : item.to === '/home' ? pathname === '/home' : item.to === '/#how-it-works' ? pathname === '/' : pathname === item.to) && (item.to === '/home' || item.to === '/train' || item.to === '/leaderboard' || item.to === '/#how-it-works' || item.to === '/how-to-use' || item.to === '/how-to-cast')
                     const linkClass = `block py-3 px-2 -mx-2 font-medium transition-colors duration-200 text-base rounded-lg ${isActive ? 'text-primary-orange bg-primary-orange/10' : 'text-white hover:text-primary-orange hover:bg-white/5'}`
                     if (item.external && item.href) {
                       return (

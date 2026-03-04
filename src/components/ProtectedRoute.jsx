@@ -2,7 +2,7 @@ import React from 'react'
 import { Navigate, useLocation } from 'react-router-dom'
 import { useAuth } from '../contexts/AuthContext'
 
-const ALLOWED_REDIRECT_PATHS = ['/how-to-use', '/how-to-cast', '/contact']
+const ALLOWED_REDIRECT_PATHS = ['/home', '/train', '/leaderboard', '/profile', '/how-to-use', '/how-to-cast', '/contact']
 
 export function ProtectedRoute({ children }) {
   const { isLoggedIn } = useAuth()

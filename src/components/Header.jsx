@@ -3,7 +3,7 @@ import { createPortal } from 'react-dom'
 import { Link, useLocation } from 'react-router-dom'
 import { useAuth } from '../contexts/AuthContext'
 
-const logo = '/images/logos/logo-cropped.png'
+const logo = '/images/logos/logo.png'
 
 const howToDropdownItems = [
   { label: 'How To Cast', to: '/how-to-cast' },

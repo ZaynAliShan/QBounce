@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useAuth } from '../contexts/AuthContext'
-const logo = '/images/logos/logo-cropped.png'
+const logo = '/images/logos/logo.png'
 
 const CONTACT_EMAIL = 'info@qbouncepro.com'
 

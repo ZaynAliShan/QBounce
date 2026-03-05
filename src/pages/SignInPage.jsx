@@ -232,8 +232,8 @@ const SignInPage = () => {
             <section className="hidden md:flex relative md:h-auto md:min-h-0 md:self-stretch md:p-6 lg:p-8 items-center justify-center order-1 md:order-2">
               <div className="relative w-full h-full rounded-2xl md:rounded-2xl border border-zinc-800 md:border-primary-orange/30 overflow-hidden bg-zinc-900">
                 <img
-                  src="/images/sign-in-page-img-4.jpg"
-                  alt="Athletes with QBounce"
+                  src="/images/sign-in-page-img.JPG"
+                  alt="Q BOUNCE training ball and gym equipment"
                   className="absolute inset-0 w-full h-full object-cover object-center"
                 />
               </div>
